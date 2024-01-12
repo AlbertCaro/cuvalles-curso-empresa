@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.19
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 33061:3306
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+    
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.2
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - 8080:80
+
+
